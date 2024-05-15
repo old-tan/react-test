@@ -3,11 +3,25 @@ import { lazy } from "react"
 
 const LayoutMain = lazy(() => import("@/Layout"))
 const NotFound = lazy(() => import("@/NotFound"))
+const Login = lazy(() => import("@/views/Login"))
+const Home = lazy(() => import("@/views/Home"))
+const About = lazy(() => import("@/views/About"))
+const Info = lazy(() => import("@/views/Info"))
+const Demo = lazy(() => import("@/views/Demo"))
+const DemoForm = lazy(() => import("@/views/Demo/Form"))
 
 const routes = [
   {
+    path: "/login",
+    element: <Login />,
+  },
+  {
     path: "/",
-    Component: LayoutMain,
+    element: <Navigate to="/login" />,
+  },
+  {
+    path: "/",
+    element: <LayoutMain />,
     children: [
       {
         path: "/",
@@ -15,21 +29,31 @@ const routes = [
       },
       {
         path: "/home",
-        Component: lazy(() => import("@/views/Home")),
+        element: <Home />,
       },
       {
         path: "/about",
-        Component: lazy(() => import("@/views/About")),
+        element: <About />,
       },
       {
         path: "/info",
-        Component: lazy(() => import("@/views/Info")),
+        element: <Info />,
+      },
+      {
+        path: "/demo",
+        element: "",
+        children: [
+          {
+            path: "/demo/form",
+            element: <DemoForm />,
+          },
+        ],
       },
     ],
   },
   {
     path: "*",
-    Component: NotFound,
+    element: <NotFound />,
   },
 ]
 const router = createBrowserRouter(routes)

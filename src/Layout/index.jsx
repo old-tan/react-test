@@ -8,6 +8,8 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  RadiusBottomleftOutlined,
+  UnorderedListOutlined,
 } from "@ant-design/icons"
 
 const { Header, Sider, Content } = Layout
@@ -26,6 +28,18 @@ const items = [
     key: "/info",
     icon: <UploadOutlined />,
     label: "一级菜单-3",
+  },
+  {
+    key: "/demo",
+    icon: <RadiusBottomleftOutlined />,
+    label: "Demo",
+    children: [
+      {
+        key: "/demo/form",
+        icon: <UnorderedListOutlined />,
+        label: "form demo",
+      },
+    ],
   },
 ]
 const url =
@@ -69,11 +83,11 @@ export default function LayoutMain() {
       >
         <Logo>
           <Avatar src={url} />
-          <h3 className="title">统一管理平台</h3>
+          <h3 className='title'>统一管理平台</h3>
         </Logo>
 
         <Menu
-          mode="inline"
+          mode='inline'
           theme={defaultTheme}
           items={items}
           style={{ border: "none" }}
@@ -90,7 +104,7 @@ export default function LayoutMain() {
           }}
         >
           <Button
-            type="text"
+            type='text'
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
             style={{
