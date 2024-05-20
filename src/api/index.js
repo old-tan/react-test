@@ -21,5 +21,6 @@ export const deleteUser = (data) => {
 }
 
 export const getList = (data) => {
+  console.log("data---", data)
   return request("get", "/users", data)
 }
