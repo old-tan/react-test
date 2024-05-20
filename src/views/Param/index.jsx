@@ -1,21 +1,20 @@
-import { useSearchParams, useLocation } from "react-router-dom"
-export default function RouteParam() {
-  const [searchParams] = useSearchParams()
-  const id = searchParams.get("id")
-  const grade = searchParams.get("grade")
+import { useNavigate, createSearchParams } from "react-router-dom"
+import { Button } from "antd"
 
-  // const location = useLocation()
-  // const { id, grade } = location.state
+export default function Param() {
+  const navigate = useNavigate("/detail")
+  const params = { id: "1", grade: "2" }
+  const handleClick = () => {
+    navigate({
+      pathname: "/detail",
+      search: `?${createSearchParams(params)}`,
+    })
+  }
 
-  console.log("stateParams---", { id, grade })
   return (
-    <>
-      <h1>RouteParam</h1>
-      <h3>参数列表</h3>
-      <ul>
-        <li>id: {id}</li>
-        <li>grade: {grade}</li>
-      </ul>
-    </>
+    <div>
+      <h1>Param</h1>
+      <Button onClick={handleClick}>go detail</Button>
+    </div>
   )
 }

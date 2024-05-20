@@ -1,11 +1,5 @@
-import { Suspense, useState } from "react"
-import {
-  Outlet,
-  useNavigate,
-  createSearchParams,
-  useHref,
-  useMatches,
-} from "react-router-dom"
+import { Suspense, useState, lazy } from "react"
+import { Outlet, useNavigate, useHref } from "react-router-dom"
 import styled from "styled-components"
 import { Layout, Menu, Button, theme, Spin, Avatar, Result } from "antd"
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons"
@@ -38,13 +32,11 @@ export default function LayoutMain() {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken()
   const { menus } = useContext(RouterContext)
-  console.log("menus---", menus)
+
   // menu 选中状态
   const [selectedKeys, setSelectedKeys] = useState([])
   // 当前路由
   const pathname = useHref()
-  // // 获取匹配到的路由
-  // const matches = useMatches()
 
   useEffect(() => {
     setSelectedKeys([pathname])
@@ -52,35 +44,7 @@ export default function LayoutMain() {
 
   // 路由导航
   const navigate = useNavigate()
-  const handleNav = ({ key }) => {
-    const params = { id: "1", grade: "2" }
-    key === "/demo/routeparam"
-      ? navigate({
-          pathname: key,
-          search: `?${createSearchParams(params)}`,
-        })
-      : navigate(key)
-
-    // key === "/demo/routeparam"
-    //   ? navigate(key, { state: params })
-    //   : navigate(key)
-  }
-
-  // 路由鉴权
-  // 匹配的路由返回的是个数组，默认最后一个就是当前路由。
-  // if (
-  //   matches.length &&
-  //   !menus.some((menu) => matches[matches.length - 1].pathname === menu.path)
-  // ) {
-  //   return (
-  //     <Result
-  //       status="403"
-  //       title="403"
-  //       subTitle="Sorry, you are not authorized to access this page."
-  //       extra={<Button type="primary">Back Home</Button>}
-  //     />
-  //   )
-  // }
+  const handleNav = ({ key }) => navigate(key)
 
   return (
     <Layout>
@@ -95,7 +59,7 @@ export default function LayoutMain() {
       >
         <Logo>
           <Avatar src={url} />
-          <h3 className="title">统一管理平台</h3>
+          {!collapsed && <h3 className="title">统一管理平台</h3>}
         </Logo>
 
         <Menu
@@ -135,7 +99,7 @@ export default function LayoutMain() {
             borderRadius: borderRadiusLG,
           }}
         >
-          <Suspense fallback={<Spin />}>
+          <Suspense fallback={null}>
             <Outlet />
           </Suspense>
         </Content>

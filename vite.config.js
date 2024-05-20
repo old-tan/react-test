@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
       open: true,
       proxy: {
         [env.VITE_APP_BASE_API]: {
-          target: "http://xxx.com",
+          target: env.VITE_APP_BASE_API,
           changeOrigin: true,
           // eg: localhost:3000/dev-api/user/me -> http://xxx.com/user/me
           rewrite: (path) => {

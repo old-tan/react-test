@@ -1,5 +1,5 @@
 import { useSearchParams, useLocation } from "react-router-dom"
-export default function RouteParam() {
+export default function Detail() {
   const [searchParams] = useSearchParams()
   const id = searchParams.get("id")
   const grade = searchParams.get("grade")
@@ -7,7 +7,7 @@ export default function RouteParam() {
   // const location = useLocation()
   // const { id, grade } = location.state
 
-  console.log("stateParams---", { id, grade })
+  // console.log("stateParams---", { id, grade })
   return (
     <>
       <h1>RouteParam</h1>
