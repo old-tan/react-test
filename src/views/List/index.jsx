@@ -1,18 +1,23 @@
 import { useState, useEffect } from "react"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { message, Spin, Button } from "antd"
 import { getList } from "@/api"
 export default function List() {
+  const queryClient = useQueryClient()
   // 1. query 请求方式-----
-  // Queries
   const paramData = { id: 1 }
-  const query = useQuery({
+  const { isLoading, data, error, refetch } = useQuery({
     queryKey: ["todo"],
+    // queryFn: getList,
     queryFn: () => getList(),
   })
-  const { isLoading, data, status } = query
-  console.log(query)
   console.log(data)
+  // const handleRefetch = async () => {
+  //   queryClient.invalidateQueries("todo")
+  // }
+
+  if (isLoading) return <Spin />
+  if (error) return <div>Error: {error.message}</div>
 
   // 2. 普通请求方式-----
   // const [data, setData] = useState(null)
@@ -46,13 +51,21 @@ export default function List() {
   return (
     <>
       <h1>List</h1>
-      <Button type="primary">刷新数据</Button>
+      <Button type="primary" onClick={refetch}>
+        Refetch Data
+      </Button>
       <ul>
-        {isLoading ? (
-          <Spin />
-        ) : (
-          data && data.map((item) => <li key={item.id}>{item.name}</li>)
-        )}
+        {data &&
+          data.map((item) => (
+            <li key={item.id}>
+              {item.name}
+              {/* <Button type="primary">add</Button>
+              <Button type="dashed">edit</Button>
+              <Button type="primary" danger>
+                del
+              </Button> */}
+            </li>
+          ))}
       </ul>
     </>
   )
